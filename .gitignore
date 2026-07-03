@@ -1,5 +1,17 @@
-*
+# Ignore everything in the root
+/*
 
-!.gitignore
+# Un-ignore the .gitignore file
+!/.gitignore
 
-!.codex/skills/
+# Un-ignore the .codex folder and all its contents
+!/.codex/
+# Ignore all other contents inside .codex by default
+/.codex/*
+
+# Global skill
+!/.codex/AGENTS.md
+
+# Skills
+!/.codex/skills/
+/.codex/skills/.system/

@@ -14,19 +14,27 @@ Generate an integrated commit subject plus a compact per-module/file body from s
    - Never include unrelated modified files.
    - If a specified file does not exist or is not tracked/modified, report it and ask how to proceed.
 
-2. Inspect only the selected files.
+2. Include Unity `.meta` companions when applicable.
+   - If the selected files are inside a Unity project, check for accompanying `.meta` files before inspecting diffs.
+   - Treat a path as inside a Unity project when it is under a directory containing Unity project markers such as `Assets/`, `Packages/manifest.json`, or `ProjectSettings/ProjectVersion.txt`.
+   - For every selected file or directory under `Assets/`, `Packages/`, or `ProjectSettings/`, include its exact companion `<path>.meta` when that `.meta` file exists, is tracked, or is modified/untracked in git.
+   - For selected directories, also include existing `.meta` files for changed files and changed subdirectories within that selected directory.
+   - Show any auto-included `.meta` files under `Selected files:` and use the expanded selected-file list for all later `git status`, `git diff`, `git add`, and `git commit` commands.
+   - Do not include unrelated `.meta` files whose asset or directory is outside the selected list.
+
+3. Inspect only the selected files.
    - Run `git status --short -- <files>`.
    - Run `git diff -- <files>`.
    - Run `git diff --cached -- <files>` when staged changes may exist.
    - If both staged and unstaged changes exist for the same selected file, explain that `git add` will include the full selected-file working-tree content, then ask before proceeding.
 
-3. Check for risks before proposing a commit.
+4. Check for risks before proposing a commit.
    - Warn about secrets, credentials, generated junk, accidental binary changes, or unrelated edits.
    - Stop and ask the user how to proceed if any risk is found.
 
-4. Summarize the selected changes in 1-3 bullets.
+5. Summarize the selected changes in 1-3 bullets.
 
-5. Generate one commit message with a subject and body.
+6. Generate one commit message with a subject and body.
 
    Subject:
    - Format: `[prefix] concise integrated summary`.
@@ -43,17 +51,17 @@ Generate an integrated commit subject plus a compact per-module/file body from s
    - Include implementation detail only when it explains user-visible or workflow behavior.
    - If changes span multiple independent intentions, warn that separate commits may be better before proposing the message.
 
-6. Ask exactly:
+7. Ask exactly:
 
    `Commit these selected changes locally with this message? y/n`
 
-7. Only if the user explicitly answers `y`:
+8. Only if the user explicitly answers `y`:
    - Run `git add -- <files>`.
    - Run `git commit -m "[prefix] concise integrated summary" -m "<body bullets>"`.
    - Run `git rev-parse --short HEAD`.
    - Report the local commit hash and say that nothing was pushed.
 
-8. If the user answers anything other than `y`, do not stage or commit.
+9. If the user answers anything other than `y`, do not stage or commit.
 
 ## Safety Rules
 

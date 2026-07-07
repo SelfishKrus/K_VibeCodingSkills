@@ -4,10 +4,12 @@
 # Un-ignore the .gitignore file
 !/.gitignore
 
-# Un-ignore the .codex folder and all its contents
+# Un-ignore the folder and all its contents
 !/.codex/
+!/.copilot/
 # Ignore all other contents inside .codex by default
 /.codex/*
+/.copilot/*
 
 # Global skill
 !/.codex/AGENTS.md
@@ -15,3 +17,5 @@
 # Skills
 !/.codex/skills/
 /.codex/skills/.system/
+
+!/.copilot/instructions/

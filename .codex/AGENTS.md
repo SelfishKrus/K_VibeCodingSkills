@@ -22,3 +22,23 @@
   - Use a concise subject in the format `[prefix] summary`, choosing an appropriate prefix such as `feat`, `fix`, `asset`, `config`, `refactor`, `test`, or `docs`, and describe only the current task.
   - Keep commits local: never push, publish, or open a pull request without separate user approval. Do not create empty commits; report when no task-specific changes exist, the directory is not a Git repository, hooks reject the commit, or Git otherwise fails.
   - End the final response with `Local Git commit: <short-hash> — <result>; files: <paths>` or `Local Git commit: not created — <reason>`, followed on its own final line by `Commit message: [prefix] summary`. Omit both lines only when no files were modified.
+
+- Houdini Workflow
+  - When a task involving Houdini has a Git commit requirement, save the active Houdini scene after every modification made through Houdini or its MCP server, and save it again immediately before committing. Include all task-specific changes to `.hip`, `.hiplc`, and `.hipnc` files in the same commit.
+  - Save every modified Houdini Digital Asset definition back to its `.hda`, `.hdalc`, or `.hdanc` library, and include the task-specific asset-library changes in the same commit.
+  - When building Houdini node networks, group each logical module into a clearly named subnet for clarity, unless doing so would break required behavior, interfaces, or references. Update and verify affected node paths and references when subnetting changes them.
+  - Add concise comments to non-obvious scripts and node networks. Document each module's purpose, important inputs and outputs, and any assumptions using script comments and appropriate node comments or sticky notes.
+  - Keep node graphs clean and tidy: use a consistent flow direction, sensible spacing and alignment, descriptive node names, minimal wire crossings, and reroute dots where they improve readability.
+
+- Minimal-Change Implementation
+  - Treat minimizing project impact and regression risk as primary constraints.
+  - Prefer the smallest, simplest change that fully satisfies the request.
+  - Preserve existing behavior, architecture, public APIs, data formats, workflows, and visual design unless the task explicitly requires changing them.
+  - Reuse existing components and patterns before introducing new abstractions, systems, dependencies, files, or configuration.
+  - Do not perform unrelated refactoring, cleanup, renaming, formatting, optimization, or feature expansion.
+  - Avoid speculative extensibility and overengineering. Implement only what is currently required.
+  - Keep edits localized. If multiple solutions are valid, choose the one with the smallest safe diff and lowest regression risk.
+  - Maintain backward compatibility whenever practical.
+  - Before editing, identify the affected behavior and inspect nearby code for existing conventions and dependencies.
+  - After editing, review the diff and run focused validation for the affected behavior. Confirm that unrelated files and features remain unchanged.
+  - If the request would require a broad architectural change or could materially affect existing features, explain the tradeoff and ask for confirmation before proceeding.

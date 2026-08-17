@@ -42,3 +42,9 @@
   - Before editing, identify the affected behavior and inspect nearby code for existing conventions and dependencies.
   - After editing, review the diff and run focused validation for the affected behavior. Confirm that unrelated files and features remain unchanged.
   - If the request would require a broad architectural change or could materially affect existing features, explain the tradeoff and ask for confirmation before proceeding.
+
+- Changed Files Reporting
+  - At the end of every task, include a `Changed files` section in the final response.
+  - List every file added, modified, renamed, or deleted during the task, using its path and a brief description of the change.
+  - Clearly label each file as added, modified, renamed, or deleted.
+  - If no files changed, explicitly write `Changed files: none`.

@@ -24,6 +24,8 @@
   - End the final response with `Local Git commit: <short-hash> — <result>; files: <paths>` or `Local Git commit: not created — <reason>`, followed on its own final line by `Commit message: [prefix] summary`. Omit both lines only when no files were modified.
 
 - Houdini Workflow
+  - Prefer VEX for Houdini code. Use Python only when it is mandatory for the required workflow or when it provides a clear, justified performance advantage.
+  - Optimize baking by limiting work to required frames, geometry, attributes, channels, and resolution; cache reusable upstream results; avoid recooking unchanged nodes; batch operations when safe; and profile bottlenecks before optimizing.
   - When a task involving Houdini has a Git commit requirement, save the active Houdini scene after every modification made through Houdini or its MCP server, and save it again immediately before committing. Include all task-specific changes to `.hip`, `.hiplc`, and `.hipnc` files in the same commit.
   - Save every modified Houdini Digital Asset definition back to its `.hda`, `.hdalc`, or `.hdanc` library, and include the task-specific asset-library changes in the same commit.
   - When building Houdini node networks, group each logical module into a clearly named subnet for clarity, unless doing so would break required behavior, interfaces, or references. Update and verify affected node paths and references when subnetting changes them.

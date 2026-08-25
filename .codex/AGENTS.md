@@ -7,6 +7,11 @@
 - Unity C# Log Debugging 
     - For key logic branches, include Debug.Log using the prefix [{ModuleName}-{ClassName}] and pass this as the context object so I can track the runtime behavior in the Unity Console."
 
+- Unity Editor/Runtime Separation
+  - Keep editor-only scripts and assemblies separate from runtime code. Prefer placing editor tooling in an editor-only assembly definition whose `includePlatforms` contains only `Editor`.
+  - If the containing `.asmdef` is not restricted to the Unity Editor, wrap all editor-only code, including every `UnityEditor` reference, with `#if UNITY_EDITOR` and `#endif`.
+  - Runtime assemblies must not depend on editor-only assemblies or expose unguarded editor-only APIs.
+
 - Execution Approval Gate
   - Before modifying code or project files, or performing any state-changing MCP or external action, provide a concise, refined in-chat summary of the proposed approach, the core idea, and the potential side effects.
   - Do not create a separate planning, design, or specification document as part of this pre-execution step. The concise in-chat summary is the complete plan unless a higher-priority instruction explicitly requires another artifact.

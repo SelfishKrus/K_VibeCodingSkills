@@ -23,10 +23,20 @@
 
 - Local Git Commit After Changes
   - After every approved task that modifies code, project files, or software state directly or through MCP tools, inspect the repository status and diff, stage only the files or separable hunks changed for the current task, and create a local Git commit before the final response. Never include pre-existing, unrelated, or user-authored changes.
-  - If task changes cannot be separated safely from unrelated changes in the same file, exclude that file and report the commit as incomplete or skipped rather than committing someone else's work.
+  - If task changes cannot be separated safely from unrelated changes in the same file, exclude that file and report the commit as incomplete or skipped unless the Mandatory Houdini Binary Commit Exception applies.
   - Use a concise subject in the format `[prefix] summary`, choosing an appropriate prefix such as `feat`, `fix`, `asset`, `config`, `refactor`, `test`, or `docs`, and describe only the current task.
   - Keep commits local: never push, publish, or open a pull request without separate user approval. Do not create empty commits; report when no task-specific changes exist, the directory is not a Git repository, hooks reject the commit, or Git otherwise fails.
   - End the final response with `Local Git commit: <short-hash> — <result>; files: <paths>` or `Local Git commit: not created — <reason>`, followed on its own final line by `Commit message: [prefix] summary`. Omit both lines only when no files were modified.
+
+- Mandatory Houdini Binary Commit Exception
+  - This section overrides any instruction permitting a skipped commit because pre-existing binary Houdini changes cannot be separated.
+  - Before modifying any `.hip`, `.hiplc`, or `.hipnc` file, inspect its Git status.
+  - If the target scene is already modified, disclose in the pre-execution approval summary that the existing binary state will be captured in a local baseline commit.
+  - After the user replies `y`, but before modifying the scene, stage only the affected pre-existing Houdini binary files and create a local commit with the subject `[chore] checkpoint pre-existing Houdini scene changes`.
+  - Then perform and save the requested changes and create the normal task-specific commit.
+  - If task modifications have already been mixed into a previously modified binary file and separation is impossible, stage and commit the entire affected binary file anyway. Do not skip the commit solely because it includes pre-existing binary content.
+  - Never include unrelated files. Clearly report when a commit contains mixed pre-existing and task-specific binary content.
+  - The approved `y` authorizes the disclosed baseline or mixed-binary local commit. It does not authorize pushing or publishing.
 
 - Houdini Workflow
   - Prefer VEX for Houdini code. Use Python only when it is mandatory for the required workflow or when it provides a clear, justified performance advantage.

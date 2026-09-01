@@ -1,0 +1,7 @@
+interface:
+  display_name: "Skip Approval Gate"
+  short_description: "Skip the custom y/n gate for one request"
+  default_prompt: "Use $skip-approval-gate to execute this request without the custom y/n gate."
+
+policy:
+  allow_implicit_invocation: false

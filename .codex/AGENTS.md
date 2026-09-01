@@ -15,9 +15,12 @@
 - Execution Approval Gate
   - Before modifying code or project files, or performing any state-changing MCP or external action, provide a concise, refined in-chat summary of the proposed approach, the core idea, and the potential side effects.
   - Do not create a separate planning, design, or specification document as part of this pre-execution step. The concise in-chat summary is the complete plan unless a higher-priority instruction explicitly requires another artifact.
-  - End the summary by asking the user to reply with exactly `y` to proceed or `n` to stop, then wait for that reply before taking the proposed action.
+  - If the user explicitly invokes `$skip-approval-gate` in the current request, treat that invocation as task-scoped authorization to skip only this custom `y`/`n` pause. Provide the summary as a non-blocking update, do not ask for or wait on `y` or `n`, and begin the requested in-scope work after the summary.
+  - The bypass applies only to the current user request and does not carry forward to later requests unless the user explicitly invokes `$skip-approval-gate` again.
+  - The bypass does not broaden the requested scope or override mandatory safety checks, sandbox or tool approvals, secrets or permission boundaries, or separate confirmation required for destructive, irreversible, privileged, or externally visible actions.
+  - When the explicit bypass does not apply, end the summary by asking the user to reply with exactly `y` to proceed or `n` to stop, then wait for that reply before taking the proposed action.
   - Treat only `y` as approval. If the user replies `n`, stop without making the proposed changes. If the reply is neither `y` nor `n`, ask again and do not proceed.
-  - After `y`, begin implementation directly in code or through the applicable MCP tools. Do not write an additional planning document.
+  - After `y`, or when the explicit bypass applies, begin implementation directly in code or through the applicable MCP tools. Do not write an additional planning document.
   - Request a new `y` or `n` decision only if the approved scope changes materially or a separate destructive, irreversible, privileged, or externally visible action requires confirmation.
   - This gate does not apply to read-only inspection, explanation, diagnosis, research, or status reporting, and it does not replace mandatory safety checks, sandbox approvals, or higher-priority instructions.
 

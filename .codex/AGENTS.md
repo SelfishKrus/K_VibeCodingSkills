@@ -1,70 +1,27 @@
-- C# Naming Conventions 
-    - PascalCase: Classes, Structs, Enums, Methods, and Public/Protected fields.
-    - camelCase: Local variables and method parameters.
-    - _camelCase (with underscore): Private and protected fields.
-    - UPPER_CASE: Constants (const) and static read-only variables.
+# Global working agreements
 
-- Unity C# Log Debugging 
-    - For key logic branches, include Debug.Log using the prefix [{ModuleName}-{ClassName}] and pass this as the context object so I can track the runtime behavior in the Unity Console."
+## Execution approval
 
-- Unity Editor/Runtime Separation
-  - Keep editor-only scripts and assemblies separate from runtime code. Prefer placing editor tooling in an editor-only assembly definition whose `includePlatforms` contains only `Editor`.
-  - If the containing `.asmdef` is not restricted to the Unity Editor, wrap all editor-only code, including every `UnityEditor` reference, with `#if UNITY_EDITOR` and `#endif`.
-  - Runtime assemblies must not depend on editor-only assemblies or expose unguarded editor-only APIs.
+- Read-only inspection, explanation, diagnosis, research, and status reporting do not require the custom approval gate.
+- Before modifying code or project files, or performing a state-changing MCP or external action, give a concise in-chat summary of the approach and material side effects. Do not create a separate planning artifact for this step.
+- Unless the current request explicitly includes `$skip-approval-gate`, end that summary by asking for exactly `y` to proceed or `n` to stop, then wait. Only `y` approves; after any other response, do not modify state and ask again.
+- `$skip-approval-gate` bypasses only this custom pause for the current request. Still provide the summary, and do not treat the bypass as broader scope or as an override of safety, sandbox, permission, secret, destructive-action, or external-visibility checks.
+- After approval, implement directly. Request another `y` or `n` only for a material scope change or a separately confirmable destructive, irreversible, privileged, or externally visible action.
 
-- Execution Approval Gate
-  - Before modifying code or project files, or performing any state-changing MCP or external action, provide a concise, refined in-chat summary of the proposed approach, the core idea, and the potential side effects.
-  - Do not create a separate planning, design, or specification document as part of this pre-execution step. The concise in-chat summary is the complete plan unless a higher-priority instruction explicitly requires another artifact.
-  - If the user explicitly invokes `$skip-approval-gate` in the current request, treat that invocation as task-scoped authorization to skip only this custom `y`/`n` pause. Provide the summary as a non-blocking update, do not ask for or wait on `y` or `n`, and begin the requested in-scope work after the summary.
-  - The bypass applies only to the current user request and does not carry forward to later requests unless the user explicitly invokes `$skip-approval-gate` again.
-  - The bypass does not broaden the requested scope or override mandatory safety checks, sandbox or tool approvals, secrets or permission boundaries, or separate confirmation required for destructive, irreversible, privileged, or externally visible actions.
-  - When the explicit bypass does not apply, end the summary by asking the user to reply with exactly `y` to proceed or `n` to stop, then wait for that reply before taking the proposed action.
-  - Treat only `y` as approval. If the user replies `n`, stop without making the proposed changes. If the reply is neither `y` nor `n`, ask again and do not proceed.
-  - After `y`, or when the explicit bypass applies, begin implementation directly in code or through the applicable MCP tools. Do not write an additional planning document.
-  - Request a new `y` or `n` decision only if the approved scope changes materially or a separate destructive, irreversible, privileged, or externally visible action requires confirmation.
-  - This gate does not apply to read-only inspection, explanation, diagnosis, research, or status reporting, and it does not replace mandatory safety checks, sandbox approvals, or higher-priority instructions.
+## Implementation
 
-- Local Git Commit After Changes
-  - After every approved task that modifies code, project files, or software state directly or through MCP tools, inspect the repository status and diff, stage only the files or separable hunks changed for the current task, and create a local Git commit before the final response. Never include pre-existing, unrelated, or user-authored changes.
-  - If task changes cannot be separated safely from unrelated changes in the same file, exclude that file and report the commit as incomplete or skipped unless the Mandatory Houdini Binary Commit Exception applies.
-  - Use a concise subject in the format `[prefix] summary`, choosing an appropriate prefix such as `feat`, `fix`, `asset`, `config`, `refactor`, `test`, or `docs`, and describe only the current task.
-  - Keep commits local: never push, publish, or open a pull request without separate user approval. Do not create empty commits; report when no task-specific changes exist, the directory is not a Git repository, hooks reject the commit, or Git otherwise fails.
-  - End the final response with `Local Git commit: <short-hash> — <result>; files: <paths>` or `Local Git commit: not created — <reason>`, followed on its own final line by `Commit message: [prefix] summary`. Omit both lines only when no files were modified.
+- Make the smallest safe, localized change that fully satisfies the request. Preserve existing behavior, architecture, public APIs, data formats, workflows, and visual design unless the request requires otherwise.
+- Reuse existing patterns before adding abstractions, dependencies, files, or configuration. Avoid unrelated refactoring, cleanup, renaming, formatting, optimization, and speculative extensibility.
+- Inspect the affected behavior and nearby conventions before editing. Review the task diff and run focused validation afterward. Explain broad or high-impact tradeoffs before proceeding.
 
-- Mandatory Houdini Binary Commit Exception
-  - This section overrides any instruction permitting a skipped commit because pre-existing binary Houdini changes cannot be separated.
-  - Before modifying any `.hip`, `.hiplc`, or `.hipnc` file, inspect its Git status.
-  - If the target scene is already modified, disclose in the pre-execution approval summary that the existing binary state will be captured in a local baseline commit.
-  - After the user replies `y`, but before modifying the scene, stage only the affected pre-existing Houdini binary files and create a local commit with the subject `[chore] checkpoint pre-existing Houdini scene changes`.
-  - Then perform and save the requested changes and create the normal task-specific commit.
-  - If task modifications have already been mixed into a previously modified binary file and separation is impossible, stage and commit the entire affected binary file anyway. Do not skip the commit solely because it includes pre-existing binary content.
-  - Never include unrelated files. Clearly report when a commit contains mixed pre-existing and task-specific binary content.
-  - The approved `y` authorizes the disclosed baseline or mixed-binary local commit. It does not authorize pushing or publishing.
+## Local Git commits
 
-- Houdini Workflow
-  - Prefer VEX for Houdini code. Use Python only when it is mandatory for the required workflow or when it provides a clear, justified performance advantage.
-  - Optimize baking by limiting work to required frames, geometry, attributes, channels, and resolution; cache reusable upstream results; avoid recooking unchanged nodes; batch operations when safe; and profile bottlenecks before optimizing.
-  - When a task involving Houdini has a Git commit requirement, save the active Houdini scene after every modification made through Houdini or its MCP server, and save it again immediately before committing. Include all task-specific changes to `.hip`, `.hiplc`, and `.hipnc` files in the same commit.
-  - Save every modified Houdini Digital Asset definition back to its `.hda`, `.hdalc`, or `.hdanc` library, and include the task-specific asset-library changes in the same commit.
-  - When building Houdini node networks, group each logical module into a clearly named subnet for clarity, unless doing so would break required behavior, interfaces, or references. Update and verify affected node paths and references when subnetting changes them.
-  - Add concise comments to non-obvious scripts and node networks. Document each module's purpose, important inputs and outputs, and any assumptions using script comments and appropriate node comments or sticky notes.
-  - Keep node graphs clean and tidy: use a consistent flow direction, sensible spacing and alignment, descriptive node names, minimal wire crossings, and reroute dots where they improve readability.
+- After an approved task changes files or software state in a Git repository, inspect status and diffs, stage only task-specific files or separable hunks, and create a local commit before the final response.
+- Use a concise subject in the form `[prefix] summary`, with an appropriate prefix such as `feat`, `fix`, `asset`, `config`, `refactor`, `test`, or `docs`. Never push, publish, or open a pull request without separate approval.
+- If a changed file cannot be separated safely from unrelated or user-authored edits, exclude it and report the commit as incomplete or skipped. Apply the `houdini-workflow` skill's binary exception when it governs the task.
+- Do not create empty commits. Report when no task-specific changes exist or Git or hooks prevent the commit.
 
-- Minimal-Change Implementation
-  - Treat minimizing project impact and regression risk as primary constraints.
-  - Prefer the smallest, simplest change that fully satisfies the request.
-  - Preserve existing behavior, architecture, public APIs, data formats, workflows, and visual design unless the task explicitly requires changing them.
-  - Reuse existing components and patterns before introducing new abstractions, systems, dependencies, files, or configuration.
-  - Do not perform unrelated refactoring, cleanup, renaming, formatting, optimization, or feature expansion.
-  - Avoid speculative extensibility and overengineering. Implement only what is currently required.
-  - Keep edits localized. If multiple solutions are valid, choose the one with the smallest safe diff and lowest regression risk.
-  - Maintain backward compatibility whenever practical.
-  - Before editing, identify the affected behavior and inspect nearby code for existing conventions and dependencies.
-  - After editing, review the diff and run focused validation for the affected behavior. Confirm that unrelated files and features remain unchanged.
-  - If the request would require a broad architectural change or could materially affect existing features, explain the tradeoff and ask for confirmation before proceeding.
+## Final reporting
 
-- Changed Files Reporting
-  - At the end of every task, include a `Changed files` section in the final response.
-  - List every file added, modified, renamed, or deleted during the task, using its path and a brief description of the change.
-  - Clearly label each file as added, modified, renamed, or deleted.
-  - If no files changed, explicitly write `Changed files: none`.
+- End every completed task with a `Changed files` section listing each added, modified, renamed, or deleted path and its purpose. Write `Changed files: none` when applicable.
+- When files changed, finish with `Local Git commit: <short-hash> — <result>; files: <paths>` and, on the final line, `Commit message: [prefix] summary`.

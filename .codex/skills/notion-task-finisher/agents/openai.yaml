@@ -1,0 +1,7 @@
+interface:
+  display_name: "Finish Notion Task"
+  short_description: "Execute one Notion task and publish its result"
+  default_prompt: "Use $notion-task-finisher to complete task page <NOTION_PAGE_ID>."
+
+policy:
+  allow_implicit_invocation: true

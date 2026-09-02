@@ -1,0 +1,7 @@
+interface:
+  display_name: "Create Notion Task"
+  short_description: "Create structured tasks in the Notion task system"
+  default_prompt: "Use $notion-task-creator to create a Notion task from my description."
+
+policy:
+  allow_implicit_invocation: true

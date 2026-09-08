@@ -1,13 +1,5 @@
 # Global working agreements
 
-## Execution approval
-
-- Read-only inspection, explanation, diagnosis, research, and status reporting do not require the custom approval gate.
-- Before modifying code or project files, or performing a state-changing MCP or external action, give a concise in-chat summary of the approach and material side effects. Do not create a separate planning artifact for this step.
-- Unless the current request explicitly includes `$skip-approval-gate`, end that summary by asking for exactly `y` to proceed or `n` to stop, then wait. Only `y` approves; after any other response, do not modify state and ask again.
-- `$skip-approval-gate` bypasses only this custom pause for the current request. Still provide the summary, and do not treat the bypass as broader scope or as an override of safety, sandbox, permission, secret, destructive-action, or external-visibility checks.
-- After approval, implement directly. Request another `y` or `n` only for a material scope change or a separately confirmable destructive, irreversible, privileged, or externally visible action.
-
 ## Implementation
 
 - Make the smallest safe, localized change that fully satisfies the request. Preserve existing behavior, architecture, public APIs, data formats, workflows, and visual design unless the request requires otherwise.

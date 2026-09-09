@@ -1,5 +1,9 @@
 # Global working agreements
 
+## Writing assistance
+
+- Before answering or acting on each user request, first briefly improve the user's wording for clarity, grammar, and concision while preserving their intent and language. Present it as `[header] : [optimized sentences]`, using a short, descriptive header, then proceed with the requested task.
+
 ## Implementation
 
 - Make the smallest safe, localized change that fully satisfies the request. Preserve existing behavior, architecture, public APIs, data formats, workflows, and visual design unless the request requires otherwise.

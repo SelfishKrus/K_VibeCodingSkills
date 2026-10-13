@@ -28,6 +28,8 @@ Follow the active global and project approval boundaries before changing files o
 
 ## Node graph quality
 
-- Group each logical module into a clearly named subnet unless doing so would break behavior, interfaces, or references. Update and verify affected paths after subnetting.
+- Route each stage's result to a Null node named `OUT_XXXX`, replacing `XXXX` with a descriptive stage name.
+- Group each logical module into a clearly named subnet unless doing so would break behavior, interfaces, or references. Use named network boxes (frames) to organize related nodes and wiring. Update and verify affected paths after subnetting.
+- When it improves wiring clarity, pass inputs through a subnet unchanged; do not modify the data solely to tidy connections.
 - Add concise comments or sticky notes for non-obvious scripts and networks, documenting purpose, important inputs and outputs, and assumptions.
 - Keep graphs consistently oriented, spaced, aligned, and descriptively named. Minimize wire crossings and use reroute dots when they improve readability.

@@ -19,5 +19,6 @@
 
 ## Final reporting
 
+- After completing each task, explain the causes of the issue or the reason for the work, and describe how you resolved it or completed the task.
 - End every completed task with a `Changed files` section listing each added, modified, renamed, or deleted path and its purpose. Write `Changed files: none` when applicable.
 - When files changed, finish with `Local Git commit: <short-hash> — <result>; files: <paths>` and, on the final line, `Commit message: [prefix] summary`.

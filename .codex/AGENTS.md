@@ -10,6 +10,14 @@
 - Reuse existing patterns before adding abstractions, dependencies, files, or configuration. Avoid unrelated refactoring, cleanup, renaming, formatting, optimization, and speculative extensibility.
 - Inspect the affected behavior and nearby conventions before editing. Review the task diff and run focused validation afterward. Explain broad or high-impact tradeoffs before proceeding.
 
+## Houdini node layout
+
+- Whenever creating or modifying a Houdini node network, lay out the affected nodes in dependency/cook order from top to bottom: sources and inputs above their consumers, with final outputs at the bottom. Derive placement from actual connections and dependencies, not creation order or node names; keep intentional feedback loops clearly separated and labeled.
+- Keep sequential chains vertically aligned and parallel branches in separate, consistently spaced columns, converging above their merge or consuming node. Keep logical stages together and leave clear gaps between stages.
+- Prevent overlaps between nodes, labels, network boxes, and sticky notes. Minimize wire crossings and wires passing through unrelated nodes; use reroute dots where helpful.
+- Perform the final layout after all nodes and connections are in place, including inside affected subnets. Automatic layout is only a starting point: inspect and correct its result. Preserve unrelated user layouts and do not change wiring, parameters, or behavior solely to improve appearance.
+- Before saving and reporting completion, visually inspect each affected network in the Network Editor or a screenshot and correct overlaps, unreadable spacing, and dependency-order violations. If visual inspection is unavailable, check node positions and connections programmatically and report that limitation.
+
 ## Local Git commits
 
 - After an approved task changes files or software state in a Git repository, inspect status and diffs, stage only task-specific files or separable hunks, and create a local commit before the final response.

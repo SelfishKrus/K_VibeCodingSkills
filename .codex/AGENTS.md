@@ -9,7 +9,7 @@
 - Make the smallest safe, localized change that fully satisfies the request. Preserve existing behavior, architecture, public APIs, data formats, workflows, and visual design unless the request requires otherwise.
 - Reuse existing patterns before adding abstractions, dependencies, files, or configuration. Avoid unrelated refactoring, cleanup, renaming, formatting, optimization, and speculative extensibility.
 - Inspect the affected behavior and nearby conventions before editing. Review the task diff and run focused validation afterward. Explain broad or high-impact tradeoffs before proceeding.
-- For work that produces outputs in multiple stages, establish checkpoints at meaningful stage boundaries. Make each intermediate output easy to inspect and reproduce, define its expected behavior or acceptance criteria, and validate it with focused unit tests where appropriate or lightweight checks otherwise, so developers can review results and isolate failures. Reuse existing testing and debugging tools, and document how to inspect or rerun each checkpoint.
+- For large changes, establish checkpoints at meaningful stage boundaries; checkpoints are optional for small changes. At each checkpoint, make the intermediate output easy to inspect and reproduce, define its expected behavior or acceptance criteria, and validate it with focused unit tests where appropriate or lightweight checks otherwise, so developers can review results and isolate failures. Reuse existing testing and debugging tools, and document how to inspect or rerun each checkpoint.
 
 ## Houdini node layout
 
